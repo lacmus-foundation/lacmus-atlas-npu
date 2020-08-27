@@ -43,7 +43,6 @@ RUN apt-get install --no-install-recommends -y wget && \
     pip3.7.5 install requests
 
 # Install Ascend Toolkit for x86 and arm
-ARG x86_64_DOWNLOAD_LINK = ''
 COPY Ascend-Toolkit-20.0.RC1-x86_64-linux_gcc7.3.0.run /home
 COPY Ascend-Toolkit-20.0.RC1-arm64-linux_gcc7.3.0.run /home
 
@@ -53,6 +52,9 @@ RUN cd /home && \
     ./Ascend-Toolkit-*-x86_64-linux_gcc*.run --check && \
     ./Ascend-Toolkit-*-arm64-linux_gcc*.run --install && \
     ./Ascend-Toolkit-*-x86_64-linux_gcc*.run --install
+
+# Install the cross-compiler
+RUN apt install g++-aarch64-linux-gnu -y
 
 
 
