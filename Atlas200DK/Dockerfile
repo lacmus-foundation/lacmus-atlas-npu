@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-# Create user and install depndency libs
+# Create user and install dependency libs
 RUN groupadd HwHiAiUser && \
     useradd -g HwHiAiUser -d /home/HwHiAiUser -m HwHiAiUser -p 'uloOwQBAk0/.c' && \
     apt-get update && \
@@ -41,6 +41,18 @@ RUN apt-get install --no-install-recommends -y wget && \
     pip3.7.5 install grpcio && \
     pip3.7.5 install grpcio-tools && \
     pip3.7.5 install requests
+
+# Install Ascend Toolkit for x86 and arm
+ARG x86_64_DOWNLOAD_LINK = ''
+COPY Ascend-Toolkit-20.0.RC1-x86_64-linux_gcc7.3.0.run /home
+COPY Ascend-Toolkit-20.0.RC1-arm64-linux_gcc7.3.0.run /home
+
+RUN cd /home && \
+    chmod +x *.run && \
+    ./Ascend-Toolkit-*-arm64-linux_gcc*.run --check && \
+    ./Ascend-Toolkit-*-x86_64-linux_gcc*.run --check && \
+    ./Ascend-Toolkit-*-arm64-linux_gcc*.run --install && \
+    ./Ascend-Toolkit-*-x86_64-linux_gcc*.run --install
 
 
 
