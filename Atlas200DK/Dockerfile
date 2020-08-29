@@ -56,6 +56,14 @@ RUN cd /home && \
 # Install the cross-compiler
 RUN apt install g++-aarch64-linux-gnu -y
 
+# Set environment variables for ATC tool
+ENV INSTALL_PATH=/usr/local/Ascend/ascend-toolkit/latest/x86_64-linux_gcc7.3.0
+ENV PATH=/usr/local/python3.7.5/bin:$INSTALL_PATH/atc/ccec_compiler/bin:$INSTALL_PATH/atc/bin:$PATH
+ENV PYTHONPATH=$INSTALL_PATH/atc/python/site-packages/te:$INSTALL_PATH/atc/python/site-packages/topi:$PYTHONPATH
+ENV LD_LIBRARY_PATH=$INSTALL_PATH/atc/lib64:$LD_LIBRARY_PATH
+ENV ASCEND_OPP_PATH=$INSTALL_PATH/opp
+
+
 
 
 
